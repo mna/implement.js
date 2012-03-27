@@ -1,0 +1,24 @@
+{
+  "author": "Martin Angers <martin.n.angers@gmail.com> (http://hypermegatop.calepin.co/)",
+  "name": "implementjs",
+  "description": "Assert that parameters or dependencies provided to your module implement all the required functionality, or \"interfaces\".",
+  "keywords": ["assert", "interface", "implements"],
+  "version": "0.1.0",
+  "homepage": "https://github.com/PuerkitoBio/implement.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PuerkitoBio/implement.js.git"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "1.x"
+    },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
