@@ -40,6 +40,28 @@ describe('implements', function () {
 			testThrows(undefined, null);
 		});
 	});
+
+	describe('objects', function () {
+		it('should accept any actual object if expected is empty object', function () {
+			testDoesntThrow({a: 0}, {});
+		});
+
+		it('should not accept an empty object if expected is not an empty object', function () {
+			testThrows({}, {a: 0});
+		});
+
+		it('should accept an object identical to the expected, non-empty object', function () {
+			testDoesntThrow({a:6, b:'', c:false}, {a: 0, b:0, c:0});
+		});
+
+		it('should accept any actual object that implements more than the expected object', function () {
+			testDoesntThrow({a: 0, b:'', c:false}, {a:0, b:0});
+		});
+
+		it('should not accept any actual object that implements less than the expected object', function () {
+			testThrows({a:0, b:0}, {a: 0, b:'', c:false});
+		});
+	});
 });
 
 function testThrows(actual, expected) {
