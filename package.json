@@ -18,9 +18,9 @@
     },
   "devDependencies": {
     "mocha": "1.x",
-    "should": "0.6.x"
+    "should": "0.6.x",
+    "jshint": "0.5.x"
     },
-  "optionalDependencies": {},
   "engines": {
     "node": "0.6.x"
   }

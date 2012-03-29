@@ -41,25 +41,33 @@ describe('implements', function () {
 		});
 	});
 
-	describe('objects', function () {
+	describe('with objects', function () {
 		it('should accept any actual object if expected is empty object', function () {
 			testDoesntThrow({a: 0}, {});
 		});
 
 		it('should not accept an empty object if expected is not an empty object', function () {
-			testThrows({}, {a: 0});
+			testThrows({}, {a: 'string'});
 		});
 
 		it('should accept an object identical to the expected, non-empty object', function () {
-			testDoesntThrow({a:6, b:'', c:false}, {a: 0, b:0, c:0});
+			testDoesntThrow({a:6, b:'', c:false}, {a: 'number', b:'string', c:'boolean'});
 		});
 
 		it('should accept any actual object that implements more than the expected object', function () {
-			testDoesntThrow({a: 0, b:'', c:false}, {a:0, b:0});
+			testDoesntThrow({a: 0, b:'', c:false}, {a:'number', b:'string'});
 		});
 
 		it('should not accept any actual object that implements less than the expected object', function () {
-			testThrows({a:0, b:0}, {a: 0, b:'', c:false});
+			testThrows({a:0, b:0}, {a: 'number', b:'number', c:'boolean'});
+		});
+
+		it('should accept an actual object that implements every interface in an array of expected objects', function () {
+			testDoesntThrow({a:0, b:0, c:'', d:false}, [{a: 'number', b:'number'}, {c:'string'}, {d:'boolean'}]);
+		});
+
+		it('should fail if an actual object doesn\'t implement every interface in an array of expected objects', function () {
+			testThrows({a:0, b:0, c:''}, [{a: 'number', b:'number'}, {c:'string'}, {d:'boolean'}]);
 		});
 	});
 });
