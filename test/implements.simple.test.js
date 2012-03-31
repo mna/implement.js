@@ -128,14 +128,5 @@ describe('implements', function () {
 		it('should accept null as key value if object is expected', function () {
 			utils.testDoesntThrow({a: null}, {a: builder.O});
 		});
-
-		it('should throw a NotImplementedError if actual doesn\'t implement expected', function () {
-			try {
-				impl({}, {a: builder.N});
-				should.fail();
-			} catch (e) {
-				e.should.be.an.instanceof(err.NotImplementedError);
-			}
-		});
 	});
 });
