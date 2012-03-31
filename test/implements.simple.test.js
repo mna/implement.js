@@ -1,7 +1,9 @@
 var impl = process.env.COV ? 
-			require('../lib-cov/implement') : require('../lib/implement'),
+			require('../lib-cov/implements') : require('../lib/implements'),
 	builder = process.env.COV ? 
 			require('../lib-cov/builder') : require('../lib/builder'),
+	err = process.env.COV ? 
+			require('../lib-cov/errors') : require('../lib/errors'),
 	utils = require('./utils')(impl);
 
 
@@ -19,28 +21,28 @@ describe('implements', function () {
 			utils.testDoesntThrow({}, {});
 		});
 
-		it('should not accept empty object if null is expected', function () {
-			utils.testThrows({}, null);
+		it('should accept empty object if null is expected (nothing to implement)', function () {
+			utils.testDoesntThrow({}, null);
 		});
 
-		it('should not accept null if empty object is expected', function () {
-			utils.testThrows(null, {});
+		it('should accept null if empty object is expected (nothing to implement)', function () {
+			utils.testDoesntThrow(null, {});
 		});
 
-		it('should not accept empty object if undefined is expected', function () {
-			utils.testThrows({}, undefined);
+		it('should accept empty object if undefined is expected (nothing to implement)', function () {
+			utils.testDoesntThrow({}, undefined);
 		});
 
-		it('should not accept undefined if empty object is expected', function () {
-			utils.testThrows(undefined, {});
+		it('should accept undefined if empty object is expected (nothing to implement)', function () {
+			utils.testDoesntThrow(undefined, {});
 		});
 
-		it('should not accept null if undefined is expected', function () {
-			utils.testThrows(null, undefined);
+		it('should accept null if undefined is expected (nothing to implement)', function () {
+			utils.testDoesntThrow(null, undefined);
 		});
 
-		it('should not accept undefined if null is expected', function () {
-			utils.testThrows(undefined, null);
+		it('should accept undefined if null is expected (nothing to implement)', function () {
+			utils.testDoesntThrow(undefined, null);
 		});
 	});
 
@@ -98,26 +100,26 @@ describe('implements', function () {
 		});
 
 		it('should accept a function as actual and expected', function () {
-			utils.testDoesntThrow(function () { return 12 }, function () {});
+			utils.testDoesntThrow(function () { return 12; }, function () {});
 		});
 
 		it('should work with typeof names as expected', function () {
 			utils.testDoesntThrow({a: 0, b: true, c: 'test', d: undefined, e: function () {}, g: {},
-							 h: new Date(), i: / /, j: null, k: [1,2]}, 
+							h: new Date(), i: / /, j: null, k: [1,2]}, 
 							{a: 'number', b: 'boolean', c: 'string', d: 'undefined', e: 'function',
-							 g: 'object', h: 'object', i: 'object', j: 'object', k: 'object'});
+							g: 'object', h: 'object', i: 'object', j: 'object', k: 'object'});
 		});
 
 		it('should work with short builder helpers as expected', function () {
 			utils.testDoesntThrow({a: 0, b: true, c: 'test', d: undefined, e: function () {}, g: {},
-							 h: new Date(), i: / /, j: null, k: [1,2]}, 
+							h: new Date(), i: / /, j: null, k: [1,2]}, 
 							{a: builder.N, b: builder.B, c: builder.S, d: builder.U, e: builder.F,
-							 g: builder.O, h: builder.D, i: builder.R, j: builder.L, k: builder.A});
+							g: builder.O, h: builder.D, i: builder.R, j: builder.L, k: builder.A});
 		});
 
 		it('should work with long builder helpers as expected', function () {
 			utils.testDoesntThrow({a: 0, b: true, c: 'test', d: undefined, e: function () {}, g: {},
-							 h: new Date(), i: / /, j: null, k: [1,2]}, 
+							h: new Date(), i: / /, j: null, k: [1,2]}, 
 							{a: builder.Number, b: builder.Boolean, c: builder.String, d: builder.Undefined, 
 								e: builder.Function, g: builder.Object, h: builder.Date, i: builder.RegExp, 
 								j: builder.Null, k: builder.Array});
@@ -125,6 +127,15 @@ describe('implements', function () {
 
 		it('should accept null as key value if object is expected', function () {
 			utils.testDoesntThrow({a: null}, {a: builder.O});
+		});
+
+		it('should throw a NotImplementedError if actual doesn\'t implement expected', function () {
+			try {
+				impl({}, {a: builder.N});
+				should.fail();
+			} catch (e) {
+				e.should.be.an.instanceof(err.NotImplementedError);
+			}
 		});
 	});
 });

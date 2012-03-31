@@ -1,5 +1,5 @@
 var impl = process.env.COV ? 
-			require('../lib-cov/implement') : require('../lib/implement'),
+			require('../lib-cov/implements') : require('../lib/implements'),
 	builder = process.env.COV ? 
 			require('../lib-cov/builder') : require('../lib/builder'),
 	utils = require('./utils')(impl),

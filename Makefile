@@ -3,7 +3,17 @@ REPORTER = spec
 test:
 	./node_modules/.bin/mocha --reporter $(REPORTER)
 
-lint:
-	jshint ./lib
+#test-debug:
+#	./node_modules/.bin/mocha --debug-brk --reporter $(REPORTER)
+#	node-inspector &
 
-.PHONY: test lint
+lint:
+	jshint index.js ./lib
+
+lint-test:
+	jshint ./test
+
+lint-examples:
+	jshint ./examples
+
+.PHONY: test lint lint-test lint-examples
