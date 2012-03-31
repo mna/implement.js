@@ -23,5 +23,10 @@ describe('implements', function () {
 
 			utils.testDoesntThrow({a: 0, b: new Date(), c: {d: / /, e: {f: function() {}}}}, intf);
 		});
+		it('should accept null in a deeply nest object even if an object with children is expected', function() {
+			var intf = {a: {b: {c: {d: builder.R}}}};
+
+			utils.testDoesntThrow({a: {b: {c: null}}}, intf);
+		});
 	});
 });
