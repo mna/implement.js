@@ -125,5 +125,13 @@ describe('implements', function () {
 		it('should accept null as key value if object is expected', function () {
 			utils.testDoesntThrow({a: null}, {a: builder.O});
 		});
+
+		it('should accept null as key value if Date is expected', function () {
+			utils.testDoesntThrow({a: null}, {a: builder.D});
+		});
+
+		it('should accept null as actual if object is expected', function () {
+			utils.testDoesntThrow(null, {a: builder.N});
+		});
 	});
 });

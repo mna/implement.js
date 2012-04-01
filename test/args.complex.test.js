@@ -97,4 +97,24 @@ describe('args', function () {
 			test('val1', true, 10);
 		});
 	});
+	describe('with strict', function () {
+		it('should accept null if null is expected', function () {
+			utils.testDoesntThrow(null, null, {strict: true});
+		});
+		it('should accept array if as expected', function () {
+			utils.testDoesntThrow(['a'], [builder.S], {strict: true});
+		});
+		it('should accept array with missing optionals', function () {
+			utils.testDoesntThrow(['a', false], [builder.S, builder.N, builder.B, builder.F], 
+				{strict: true, optionalArgsStartIndex: 1});
+		});
+		it('should not accept array with missing optionals and additional args', function () {
+			utils.testThrows(['a', false, 10], [builder.S, builder.N, builder.B, builder.F], 
+				{strict: true, optionalArgsStartIndex: 1});
+		});
+		it('should not accept array with all required and additional args', function () {
+			utils.testThrows(['a', false, 10], [builder.S, builder.B], 
+				{strict: true});
+		});
+	});
 });

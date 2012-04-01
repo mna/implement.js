@@ -2,6 +2,12 @@
 
 Strong type-checking for dependency injection and method arguments.
 
+## Usage ##
+
+### Install ###
+
+`npm install implement.js`
+
 ## Do not use yet ##
 
 Not quite alpha-ready. Coming soon, though.

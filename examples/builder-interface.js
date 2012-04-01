@@ -1,0 +1,26 @@
+var builder = require('../lib/builder');
+
+// Public interface for builder module
+module.exports = builder.createInterface()
+						.addFunction("F")
+						.addFunction("Function")
+						.addArray("A")
+						.addArray("Array")
+						.addRegExp("R")
+						.addRegExp("RegExp")
+						.addObject("O")
+						.addObject("Object")
+						.addNumber("N")
+						.addNumber("Number")
+						.addString("S")
+						.addString("String")
+						.addBoolean("B")
+						.addBoolean("Boolean")
+						.addUndefined("U")
+						.addUndefined("Undefined")
+						.addNull("L")
+						.addNull("Null")
+						.addDate("D")
+						.addDate("Date")
+						.addFunction("createInterface")
+						.getInterface();

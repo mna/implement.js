@@ -1,12 +1,14 @@
 var impl = process.env.COV ? 
 			require('../lib-cov/implements') : require('../lib/implements'),
+	args = process.env.COV ? 
+			require('../lib-cov/args') : require('../lib/args'),
 	builder = process.env.COV ? 
 			require('../lib-cov/builder') : require('../lib/builder'),
 	err = process.env.COV ? 
 			require('../lib-cov/errors') : require('../lib/errors'),
 	_ = require("underscore");
 
-describe("errors", function () {
+describe("NotImplementedError", function () {
 	it('should be an instance of Error', function () {
 		try {
 			impl({}, {a: builder.N});
@@ -15,7 +17,7 @@ describe("errors", function () {
 			e.should.be.an.instanceof(Error);
 		}
 	});
-	it('should throw a NotImplementedError if actual doesn\'t implement expected', function () {
+	it('should be thrown if actual doesn\'t implement expected', function () {
 		try {
 			impl({}, {a: builder.N});
 			should.fail();
@@ -77,6 +79,32 @@ describe("errors", function () {
 			should.fail();
 		} catch (e) {
 			e.message.should.eql("The keys c.e,f are missing and the keys a,c.d are not of the expected types.");
+		}
+	});
+});
+describe("TooManyArgsError", function () {
+	it('should be an instance of Error', function () {
+		try {
+			args(['', 1, 2], ['string'], {strict: true});
+			should.fail();
+		} catch (e) {
+			e.should.be.an.instanceof(Error);
+		}
+	});
+	it('should be thrown if too many args are specified', function () {
+		try {
+			args(['', 1, 2], ['string'], {strict: true});
+			should.fail();
+		} catch (e) {
+			e.should.be.an.instanceof(err.TooManyArgsError);
+		}
+	});
+	it('should display an error message', function () {
+		try {
+			args(['', 1, 2], ['string'], {strict: true});
+			should.fail();
+		} catch (e) {
+			e.message.should.not.be.empty;
 		}
 	});
 });
