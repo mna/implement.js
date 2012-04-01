@@ -2,10 +2,7 @@ var impl = process.env.COV ?
 			require('../lib-cov/implements') : require('../lib/implements'),
 	builder = process.env.COV ? 
 			require('../lib-cov/builder') : require('../lib/builder'),
-	err = process.env.COV ? 
-			require('../lib-cov/errors') : require('../lib/errors'),
 	utils = require('./utils')(impl);
-
 
 describe('implements', function () {
 	describe('special cases', function () {
