@@ -90,5 +90,15 @@ describe('args', function () {
 		it('should accept null as value if object is expected', function () {
 			utils.testDoesntThrow([null], [builder.O]);
 		});
+
+		it('should return array with no optional or additional args equal to actual', function () {
+			var ar = args([0, 'a', false], [builder.N, builder.S, builder.B]);
+			ar.should.eql([0, 'a', false]);
+		});
+
+		it('should return array with additional args trimmed to expected', function () {
+			var ar = args([0, 'a', false], [builder.N, builder.S]);
+			ar.should.eql([0, 'a']);
+		});
 	});
 });

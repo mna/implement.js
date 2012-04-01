@@ -1,13 +1,13 @@
 module.exports = function (impl) {
 	return {
-		testThrows: function (actual, expected) {
+		testThrows: function (actual, expected, opts) {
 						(function() {
-							impl(actual, expected);
+							impl(actual, expected, opts);
 						}).should.throw();
 					},
-		testDoesntThrow: function (actual, expected) {
+		testDoesntThrow: function (actual, expected, opts) {
 						(function() {
-							impl(actual, expected);
+							impl(actual, expected, opts);
 						}).should.not.throw();
 					}
 	};

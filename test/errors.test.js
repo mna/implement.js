@@ -7,6 +7,14 @@ var impl = process.env.COV ?
 	_ = require("underscore");
 
 describe("errors", function () {
+	it('should be an instance of Error', function () {
+		try {
+			impl({}, {a: builder.N});
+			should.fail();
+		} catch (e) {
+			e.should.be.an.instanceof(Error);
+		}
+	});
 	it('should throw a NotImplementedError if actual doesn\'t implement expected', function () {
 		try {
 			impl({}, {a: builder.N});
