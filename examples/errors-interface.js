@@ -1,7 +1,7 @@
-var builder = require('../lib/builder');
+var impl = require('../index');
 
 // Public interface for errors module
-module.exports = builder.createInterface()
+module.exports = impl.createInterface()
 						.addFunction("NotImplementedError")
 						.addFunction("TooManyArgsError")
 						.getInterface();

@@ -1,8 +1,8 @@
-var builder = require('../lib/builder');
+var impl = require('../index');
 
 // Public interface for implement's API (combines "implements" and "args" modules,
 // as exposed through "implement")
-module.exports = builder.createInterface()
+module.exports = impl.createInterface()
 						.addFunction("implements")
 						.addFunction("assertArgs")
 						.addFunction("assertArguments")

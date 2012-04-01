@@ -22,8 +22,16 @@ describe('implements', function () {
 			utils.testDoesntThrow({}, null);
 		});
 
-		it('should accept null if empty object is expected (nothing to implement)', function () {
-			utils.testDoesntThrow(null, {});
+		it('should not accept null if empty object is expected', function () {
+			utils.testThrows(null, {});
+		});
+
+		it('should accept null if null is allowed', function () {
+			utils.testDoesntThrow(null, {}, {allowNullObjects: true});
+		});
+
+		it('should accept null if null is allowed even if expected is not empty', function () {
+			utils.testDoesntThrow(null, {a: '', b: 0}, {allowNullObjects: true});
 		});
 
 		it('should accept empty object if undefined is expected (nothing to implement)', function () {
@@ -102,7 +110,7 @@ describe('implements', function () {
 
 		it('should work with typeof names as expected', function () {
 			utils.testDoesntThrow({a: 0, b: true, c: 'test', d: undefined, e: function () {}, g: {},
-							h: new Date(), i: / /, j: null, k: [1,2]}, 
+							h: new Date(), i: / /, j: {}, k: [1,2]}, 
 							{a: 'number', b: 'boolean', c: 'string', d: 'undefined', e: 'function',
 							g: 'object', h: 'object', i: 'object', j: 'object', k: 'object'});
 		});
@@ -122,16 +130,48 @@ describe('implements', function () {
 								j: builder.Null, k: builder.Array});
 		});
 
-		it('should accept null as key value if object is expected', function () {
-			utils.testDoesntThrow({a: null}, {a: builder.O});
+		it('should not accept null as key value if builder object is expected when null not allowed', function () {
+			utils.testThrows({a: null}, {a: builder.O});
+		});
+		it('should not accept null as key value if typeof object is expected when null not allowed', function () {
+			utils.testThrows({a: null}, {a: 'object'});
+		});
+		it('should not accept null as key value if Date is expected when null not allowed', function () {
+			utils.testThrows({a: null}, {a: builder.D});
+		});
+		it('should not accept null as key value if Array is expected when null not allowed', function () {
+			utils.testThrows({a: null}, {a: builder.A});
+		});
+		it('should not accept null as key value if RegExp is expected when null not allowed', function () {
+			utils.testThrows({a: null}, {a: builder.R});
+		});
+		it('should accept null as key value if null is expected when null not allowed', function () {
+			utils.testDoesntThrow({a: null}, {a: builder.L});
+		});
+		it('should not accept null as actual if object is expected when null not allowed', function () {
+			utils.testThrows(null, {a: builder.N});
 		});
 
-		it('should accept null as key value if Date is expected', function () {
-			utils.testDoesntThrow({a: null}, {a: builder.D});
+		it('should accept null as key value if builder object is expected when null allowed', function () {
+			utils.testDoesntThrow({a: null}, {a: builder.O}, {allowNullObjects: true});
 		});
-
-		it('should accept null as actual if object is expected', function () {
-			utils.testDoesntThrow(null, {a: builder.N});
+		it('should accept null as key value if typeof object is expected when null allowed', function () {
+			utils.testDoesntThrow({a: null}, {a: 'object'}, {allowNullObjects: true});
+		});
+		it('should accept null as key value if Date is expected when null allowed', function () {
+			utils.testDoesntThrow({a: null}, {a: builder.D}, {allowNullObjects: true});
+		});
+		it('should accept null as key value if Array is expected when null allowed', function () {
+			utils.testDoesntThrow({a: null}, {a: builder.A}, {allowNullObjects: true});
+		});
+		it('should accept null as key value if RegExp is expected when null allowed', function () {
+			utils.testDoesntThrow({a: null}, {a: builder.R}, {allowNullObjects: true});
+		});
+		it('should accept null as key value if null is expected when null allowed', function () {
+			utils.testDoesntThrow({a: null}, {a: builder.L}, {allowNullObjects: true});
+		});
+		it('should accept null as actual if object is expected when null allowed', function () {
+			utils.testDoesntThrow(null, {a: builder.N}, {allowNullObjects: true});
 		});
 	});
 });

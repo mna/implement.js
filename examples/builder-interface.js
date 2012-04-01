@@ -1,7 +1,7 @@
-var builder = require('../lib/builder');
+var impl = require('../index');
 
 // Public interface for builder module
-module.exports = builder.createInterface()
+module.exports = impl.createInterface()
 						.addFunction("F")
 						.addFunction("Function")
 						.addArray("A")

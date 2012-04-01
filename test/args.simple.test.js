@@ -67,7 +67,7 @@ describe('args', function () {
 
 		it('should work with typeof names as expected', function () {
 			utils.testDoesntThrow([0, true, 'test', undefined, function () {}, {},
-							new Date(), / /, null, [1,2]], 
+							new Date(), / /, {}, [1,2]], 
 							['number', 'boolean', 'string', 'undefined', 'function',
 							'object', 'object', 'object', 'object', 'object']);
 		});
@@ -87,8 +87,42 @@ describe('args', function () {
 								builder.Null, builder.Array]);
 		});
 
-		it('should accept null as value if object is expected', function () {
-			utils.testDoesntThrow([null], [builder.O]);
+		it('should not accept null as value if object is expected when null not allowed', function () {
+			utils.testThrows([null], [builder.O]);
+		});
+		it('should not accept null as value if typeof object is expected when null not allowed', function () {
+			utils.testThrows([null], ['object']);
+		});
+		it('should not accept null as value if Date is expected when null not allowed', function () {
+			utils.testThrows([null], [builder.D]);
+		});
+		it('should not accept null as value if Array is expected when null not allowed', function () {
+			utils.testThrows([null], [builder.A]);
+		});
+		it('should not accept null as value if RegExp is expected when null not allowed', function () {
+			utils.testThrows([null], [builder.R]);
+		});
+		it('should accept null as value if null is expected when null not allowed', function () {
+			utils.testDoesntThrow([null], [builder.L]);
+		});
+
+		it('should accept null as value if object is expected when null allowed', function () {
+			utils.testDoesntThrow([null], [builder.O], {allowNullObjects: true});
+		});
+		it('should accept null as value if typeof object is expected when null allowed', function () {
+			utils.testDoesntThrow([null], ['object'], {allowNullObjects: true});
+		});
+		it('should accept null as value if Date is expected when null allowed', function () {
+			utils.testDoesntThrow([null], [builder.D], {allowNullObjects: true});
+		});
+		it('should accept null as value if Array is expected when null allowed', function () {
+			utils.testDoesntThrow([null], [builder.A], {allowNullObjects: true});
+		});
+		it('should accept null as value if RegExp is expected when null allowed', function () {
+			utils.testDoesntThrow([null], [builder.R], {allowNullObjects: true});
+		});
+		it('should accept null as value if null is expected when null allowed', function () {
+			utils.testDoesntThrow([null], [builder.L], {allowNullObjects: true});
 		});
 
 		it('should return array with no optional or additional args equal to actual', function () {
