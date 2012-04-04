@@ -17,6 +17,14 @@ describe("NotImplementedError", function () {
 			e.should.be.an.instanceof(Error);
 		}
 	});
+	it('should have a name', function () {
+		try {
+			impl({}, {a: builder.N});
+			should.fail();
+		} catch (e) {
+			e.name.should.eql("Not Implemented Error");
+		}
+	});
 	it('should be thrown if actual doesn\'t implement expected', function () {
 		try {
 			impl({}, {a: builder.N});
@@ -81,6 +89,14 @@ describe("NotImplementedError", function () {
 			e.message.should.eql("The keys c.e,f are missing and the keys a,c.d are not of the expected types.");
 		}
 	});
+	it('should have the stack trace', function () {
+		try {
+			impl({a: 'allo', b: false, c: {d: ''}}, {a: 0, b: 'boolean', c: {d: false, e: ''}, f: 0});
+			should.fail();
+		} catch (e) {
+			e.stack.should.not.be.empty;
+		}
+	});
 });
 describe("TooManyArgsError", function () {
 	it('should be an instance of Error', function () {
@@ -89,6 +105,14 @@ describe("TooManyArgsError", function () {
 			should.fail();
 		} catch (e) {
 			e.should.be.an.instanceof(Error);
+		}
+	});
+	it('should have a name', function () {
+		try {
+			args(['', 1, 2], ['string'], {strict: true});
+			should.fail();
+		} catch (e) {
+			e.name.should.eql("Too Many Arguments Error");
 		}
 	});
 	it('should be thrown if too many args are specified', function () {
@@ -105,6 +129,14 @@ describe("TooManyArgsError", function () {
 			should.fail();
 		} catch (e) {
 			e.message.should.not.be.empty;
+		}
+	});
+	it('should have the stack trace', function () {
+		try {
+			args(['', 1, 2], ['string'], {strict: true});
+			should.fail();
+		} catch (e) {
+			e.stack.should.not.be.empty;
 		}
 	});
 });
