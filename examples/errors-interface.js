@@ -4,4 +4,5 @@ var impl = require('../index');
 module.exports = impl.createInterface()
 						.addFunction("NotImplementedError")
 						.addFunction("TooManyArgsError")
+						.addFunction("UnexpectedTypeError")
 						.getInterface();

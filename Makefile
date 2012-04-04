@@ -3,6 +3,9 @@ REPORTER = spec
 test:
 	./node_modules/.bin/mocha --reporter $(REPORTER)
 
+test-examples:
+	./node_modules/.bin/mocha test/examples/*.js --reporter $(REPORTER)
+
 #test-debug:
 #	./node_modules/.bin/mocha --debug-brk --reporter $(REPORTER)
 #	node-inspector &

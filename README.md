@@ -12,6 +12,7 @@ Likewise, the `assertArgs()` method takes an array of values (typically, the `ar
 
 ### Changelog ###
 
+*	**v0.2.2**: Added the `version` property to the public exports, and the missing `UnexpectedTypeError`.
 *	**v0.2.1**: Added this changelog to the README
 *	**v0.2.0**: Throw a `UnexpectedTypeError` when calling `assertArgs()` with invalid values, instead of `NotImplementedError`. Replaced the `NotImplementedError.errors.typeMismatch` and `NotImplementedError.errors.missingKeys` with `UnexpectedTypeError.typeMismatch` and `NotImplementedError.missingKeys`. In a DRY exercise, made `NotImplementedError` inherit from `UnexpectedTypeError`, based on this article: http://dustinsenos.com/articles/customErrorsInNode
 *	**v0.1.1**: Refactored errors implementation based on this article: http://dustinsenos.com/articles/customErrorsInNode

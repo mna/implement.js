@@ -7,4 +7,5 @@ module.exports = impl.createInterface()
 						.addFunction("assertArgs")
 						.addFunction("assertArguments")
 						.addFunction("assertValues")
+						.addString("version")
 						.getInterface();
