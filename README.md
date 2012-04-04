@@ -105,6 +105,24 @@ module.exports = impl.createInterface()
 						.getInterface();
 ```
 
+**Persistent nested interface**: the builder helper methods can also be used to create nester interfaces, with the child interface specified as a second argument to `.addObject()`:
+
+```javascript
+var impl = require("implementjs");
+
+var intfChild = impl.createInterface()
+						.addFunction("whistle")
+						.addString("lyrics")
+						.addBoolean("applause")
+						.addDate("start")
+						.addArray("choir")
+						.getInterface();
+var intfParent = impl.createInterface()
+						.addString("concert")
+						.addObject("song", intfChild)
+						.getInterface();
+```
+
 **Array of expected interfaces**: a single object can be expected to implement more than one interface. This can be verified in one single call, using an array of expected interfaces. Assuming the *intf1* and *intf2* are interfaces required by the module:
 
 ```javascript
@@ -117,7 +135,7 @@ impl.implements(externalDependency, [intf1, intf2]);
 
 ### assertArgs()
 
-The `assertArgs()` (or the aliases `assertArguments()` and `assertValues()`) method expects an actual array (the arguments to validate, usually the `arguments` array of the calling function), an array of the expected types, and an options hash. If a value is not of the expected type, it throws a `NotImplementedError` exception.
+The `assertArgs()` (or the aliases `assertArguments()` and `assertValues()`) method expects an actual array (the arguments to validate, usually the `arguments` array of the calling function), an array of the expected types, and an options hash. If a value is not of the expected type, it throws a `UnexpectedTypeError` exception.
 
 **Example**: the types can be defined in the same way as the `implements()` method, that is, using typeof strings or builder helper fields - the short or long variety. It will *not* deeply validate objects, you should use `implements()` on this specific value for this. Assuming `impl` is the variable used to require *implementjs*:
 
@@ -161,8 +179,11 @@ function twistAndShout(band, members, duration, encore, wave) {
 
 Two custom error objects are used in *implement.js*:
 
-*	*NotImplementedError*: has an `errors` property, which is an object with two properties. `errors.missingKeys` is an array of expected keys missing from the instance (nested keys are prefixed, so if key *leaf* on object *tree* is missing, it will be named *tree.leaf*). `errors.typeMismatch` is a hash where the key is the key in error (prefixed if from a nested object), and the value is an object with two properties, `actualType` and `expectedType`.
+*	*UnexpectedTypeError*: has a `typeMismatch` property, which is a hash where the key is the key in error (prefixed if from a nested object), and the value is an object with two properties, `actualType` and `expectedType`.
+*	*NotImplementedError*: has two properties, `typeMismatch` which is inherited from `UnexpectedTypeError`, and `missingKeys`, which is an array of expected keys missing from the instance (nested keys are prefixed, so if key *leaf* on object *tree* is missing, it will be named *tree.leaf*).
 *	*TooManyArgsError*: thrown when `assertArgs()` is in strict mode and there are more values then expected. There are no additional properties on this object.
+
+All errors have `message`, `stack` and `name` properties.
 
 ## License ##
 
