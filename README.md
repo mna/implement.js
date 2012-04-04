@@ -177,7 +177,7 @@ function twistAndShout(band, members, duration, encore, wave) {
 
 ### Exceptions
 
-Two custom error objects are used in *implement.js*:
+Three custom error objects are used in *implement.js*:
 
 *	*UnexpectedTypeError*: has a `typeMismatch` property, which is a hash where the key is the key in error (prefixed if from a nested object), and the value is an object with two properties, `actualType` and `expectedType`.
 *	*NotImplementedError*: has two properties, `typeMismatch` which is inherited from `UnexpectedTypeError`, and `missingKeys`, which is an array of expected keys missing from the instance (nested keys are prefixed, so if key *leaf* on object *tree* is missing, it will be named *tree.leaf*).
