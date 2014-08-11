@@ -2,6 +2,7 @@ var impl = process.env.COV ?
 			require('../lib-cov/implements') : require('../lib/implements'),
 	builder = process.env.COV ? 
 			require('../lib-cov/builder') : require('../lib/builder'),
+	inherits = require('util').inherits,
 	utils = require('./utils')(impl);
 
 
@@ -34,4 +35,36 @@ describe('implements', function () {
 			utils.testDoesntThrow({a: {b: {c: null}}}, intf, {allowNullObjects: true});
 		});
 	});
+
+	describe('using constructors as expected objects', function() {
+
+		it('checks against prototype fields', function() {
+			var Parent = function(){};
+			Parent.prototype.foo = function() {};
+			var Child = function() {};
+			inherits(Child, Parent);
+			Child.prototype.bar = function() {};
+
+			utils.testDoesntThrow({foo: function() {}, bar: function() {}}, Child);
+		});
+
+		it('auomatic instanciating can be disabled', function() {
+			var My = function(){};
+			My.prototype.foo = function() {};
+			My.baz = function() {};
+
+			utils.testDoesntThrow({baz: function() {}}, My, {instanciateConstructors: false});
+		});
+
+
+		it('do not execute constructors', function() {
+			var My = function(){
+				throw('Douh! constructor executed');
+			};
+			My.prototype.foo = function() {};
+
+			utils.testDoesntThrow({foo: function() {}}, My);
+		});
+
+	})
 });
