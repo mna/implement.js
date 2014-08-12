@@ -3,7 +3,7 @@
   "name": "implementjs",
   "description": "Strong type-checking for dependency injection and method arguments.",
   "keywords": ["assert", "interface", "implements", "strong", "type", "checking", "contract"],
-  "version": "0.2.2",
+  "version": "0.3.0",
   "homepage": "https://github.com/PuerkitoBio/implement.js",
   "repository": {
     "type": "git",

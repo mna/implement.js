@@ -12,6 +12,7 @@ Likewise, the `assertArgs()` method takes an array of values (typically, the `ar
 
 ### Changelog ###
 
+*   **v0.3.0**: Support for constructor functions, thanks to @micha149.
 *	**v0.2.2**: Added the `version` property to the public exports, and the missing `UnexpectedTypeError`.
 *	**v0.2.1**: Added this changelog to the README
 *	**v0.2.0**: Throw a `UnexpectedTypeError` when calling `assertArgs()` with invalid values, instead of `NotImplementedError`. Replaced the `NotImplementedError.errors.typeMismatch` and `NotImplementedError.errors.missingKeys` with `UnexpectedTypeError.typeMismatch` and `NotImplementedError.missingKeys`. In a DRY exercise, made `NotImplementedError` inherit from `UnexpectedTypeError`, based on this article: http://dustinsenos.com/articles/customErrorsInNode
@@ -140,6 +141,8 @@ The `implements()` method expects an actual value (the instance), the expected i
 *	**Options**: the options hash supports only one option at the moment:
 
 	*	*allowNullObjects*: boolean - if true, null is allowed when an object is expected, whether this object is an Array, a Date, a RegExp or a plain Object. Default is false (if null when an object is expected, will throw an error).
+
+    *   *instanciateConstructors*: boolean - if true, and the expected argument to `implements` is a function, it is treated as a constructor and is instanciated. Defaults to true.
 
 ### assertArgs() ###
 
